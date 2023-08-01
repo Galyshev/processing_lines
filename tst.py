@@ -5,14 +5,17 @@ from PyQt5.QtCore import pyqtSignal
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 
+
 class ClickableLineEdit(QLineEdit):
     clicked = pyqtSignal()
+
     def mousePressEvent(self, event):
         self.clicked.emit()
         QLineEdit.mousePressEvent(self, event)
 
 
 class Ui_MainWindow(object):
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1421, 930)
@@ -21,7 +24,7 @@ class Ui_MainWindow(object):
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-# -------------------pict------------------------------------------------------
+        # -------------------pict------------------------------------------------------
         self.Y_W = QtWidgets.QLabel(self.centralwidget)
         self.Y_W.setGeometry(QtCore.QRect(390, 20, 1000, 405))
         self.Y_W.setText("")
@@ -38,7 +41,7 @@ class Ui_MainWindow(object):
 
         rx = QtCore.QRegExp("[0-9]{4}")
         val = QtGui.QRegExpValidator(rx)
-# -------------------------input--------------------------------------
+        # -------------------------input--------------------------------------
         self.length_txt = QtWidgets.QLabel(self.centralwidget)
         self.length_txt.setGeometry(QtCore.QRect(30, 60, 161, 41))
         font = QtGui.QFont()
@@ -98,7 +101,7 @@ class Ui_MainWindow(object):
         self.height_inp.setObjectName("height_inp")
         self.height_inp.setValidator(val)
         self.height_inp.clicked.connect(self.height_inp.clear)
-# -------------------------------radio-------------------------------------------------------
+        # -------------------------------radio-------------------------------------------------------
         self.radio_B = QtWidgets.QRadioButton(self.centralwidget)
         self.radio_B.setGeometry(QtCore.QRect(30, 290, 101, 31))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -170,7 +173,7 @@ class Ui_MainWindow(object):
         self.radio_EB.setIconSize(QtCore.QSize(20, 20))
         self.radio_EB.setChecked(False)
         self.radio_EB.setObjectName("radio_EB")
-# ---------------------------------info_line-----------------------------------------------
+        # ---------------------------------info_line-----------------------------------------------
         self.info_line_txt = QtWidgets.QLabel(self.centralwidget)
         self.info_line_txt.setGeometry(QtCore.QRect(20, 500, 361, 21))
         font = QtGui.QFont()
@@ -248,7 +251,7 @@ class Ui_MainWindow(object):
         self.square_m2.setFont(font)
         self.square_m2.setScaledContents(True)
         self.square_m2.setObjectName("square_m2")
-# ---------------------------output Y_W-------------------------------------------------------
+        # ---------------------------output Y_W-------------------------------------------------------
         self.YW_w1 = QtWidgets.QLabel(self.centralwidget)
         self.YW_w1.setGeometry(QtCore.QRect(540, 70, 81, 41))
         font = QtGui.QFont()
@@ -368,7 +371,7 @@ class Ui_MainWindow(object):
         self.YW_work_l.setScaledContents(True)
         self.YW_work_l.setAlignment(QtCore.Qt.AlignCenter)
         self.YW_work_l.setObjectName("YW_work_l")
-# _____________________________output Y_L___________________________________________________________
+        # _____________________________output Y_L___________________________________________________________
         self.YL_l2 = QtWidgets.QLabel(self.centralwidget)
         self.YL_l2.setGeometry(QtCore.QRect(600, 550, 81, 41))
         font = QtGui.QFont()
@@ -488,7 +491,7 @@ class Ui_MainWindow(object):
         self.YL_w1.setScaledContents(True)
         self.YL_w1.setAlignment(QtCore.Qt.AlignCenter)
         self.YL_w1.setObjectName("YL_w1")
-# ----------------------output koef-------------------------------------------
+        # ----------------------output koef-------------------------------------------
         self.L_div_W = QtWidgets.QLabel(self.centralwidget)
         self.L_div_W.setGeometry(QtCore.QRect(670, 450, 220, 40))
         font = QtGui.QFont()
@@ -549,8 +552,8 @@ class Ui_MainWindow(object):
         self.L_plus_W.setAlignment(QtCore.Qt.AlignCenter)
         self.L_plus_W.setObjectName("L_plus_W")
 
-# ------------------------------button------------------------------
-        self.Button = QtWidgets.QPushButton(self.centralwidget)
+        # ------------------------------button------------------------------
+        self.Button = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.calculation())
         self.Button.setGeometry(QtCore.QRect(40, 810, 251, 81))
         font = QtGui.QFont()
         font.setFamily("Arial")
@@ -558,6 +561,72 @@ class Ui_MainWindow(object):
         self.Button.setFont(font)
         self.Button.setStyleSheet("background-color: rgb(191, 191, 191);")
         self.Button.setObjectName("Button")
+
+        # ------------------------------ERROR------------------------------
+        self.error_w1 = QtWidgets.QLabel(self.centralwidget)
+        self.error_w1.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_w1.setFont(font)
+        self.error_w1.setObjectName("error_w1")
+
+        self.error_w2 = QtWidgets.QLabel(self.centralwidget)
+        self.error_w2.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_w2.setFont(font)
+        self.error_w2.setObjectName("error_w2")
+
+        self.error_l1 = QtWidgets.QLabel(self.centralwidget)
+        self.error_l1.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_l1.setFont(font)
+        self.error_l1.setObjectName("error_l1")
+
+        self.error_l2 = QtWidgets.QLabel(self.centralwidget)
+        self.error_l2.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_l2.setFont(font)
+        self.error_l2.setObjectName("error_l2")
+
+        self.error_h = QtWidgets.QLabel(self.centralwidget)
+        self.error_h.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_h.setFont(font)
+        self.error_h.setObjectName("error_h")
+
+        self.error_k = QtWidgets.QLabel(self.centralwidget)
+        self.error_k.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_k.setFont(font)
+        self.error_k.setObjectName("error_k")
+
+        self.error_WL = QtWidgets.QLabel(self.centralwidget)
+        self.error_WL.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_WL.setFont(font)
+        self.error_WL.setObjectName("error_WL")
+
+        self.error_WH = QtWidgets.QLabel(self.centralwidget)
+        self.error_WH.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(11)
+        self.error_WH.setFont(font)
+        self.error_WH.setObjectName("error_WH")
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -603,9 +672,352 @@ class Ui_MainWindow(object):
         self.line_EVOL_2.setText(_translate("MainWindow", "EVOL-100"))
         self.Button.setText(_translate("MainWindow", "Расчет"))
 
+    def calculation(self):
+        flag_evol = True
+        flag_evol_L = True
+        flag_618 = True
+        flag_924 = True
+        flag_1228 = True
+        flag_bobst = False
+
+        try:
+            length = int(self.length_inp.text())
+            if length == 0:
+                err = QMessageBox()
+                err.setWindowTitle('Ошибка')
+                err.setText('значение длины не может быть 0')
+                err.exec_()
+        except Exception as e:
+            err = QMessageBox()
+            err.setWindowTitle('Ошибка')
+            err.setText('ПУСТОЕ поле длины')
+            err.exec_()
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+        try:
+            width = int(self.width_inp.text())
+            if width == 0:
+                err = QMessageBox()
+                err.setWindowTitle('Ошибка')
+                err.setText('значение ширины не может быть 0')
+                err.exec_()
+        except Exception as e:
+            err = QMessageBox()
+            err.setWindowTitle('Ошибка')
+            err.setText('ПУСТОЕ поле ширины')
+            err.exec_()
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+        try:
+            heigth = int(self.height_inp.text())
+            if heigth == 0:
+                err = QMessageBox()
+                err.setWindowTitle('Ошибка')
+                err.setText('значение высоты не может быть 0')
+                err.exec_()
+        except Exception as e:
+            err = QMessageBox()
+            err.setWindowTitle('Ошибка')
+            err.setText('ПУСТОЕ поле высоты')
+            err.exec_()
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+
+        if self.radio_B.isChecked():
+            w1 = width + 2
+            w2 = width + 4
+            l1 = length + 4
+            l2 = length + 2
+            h = heigth + 4
+            YL_l2 = l2
+            YL_w2 = w2
+            YL_w1 = w1
+            YL_l1 = l1
+            k = math.floor((width + 2) / 2)
+            W = k * 2 + h
+            L = l1 + l2 + w1 + w2 + 35
+            L_plus_W = l1 + w2
+            H_div_L = round((heigth / length), 2)
+            H_div_W = round((heigth / width), 2)
+            L_div_W = round((length / width), 2)
+            S = round((L * W) / 1000000, 4)
+        elif self.radio_E.isChecked():
+            w1 = width + 1
+            w2 = width + 2
+            l1 = length + 2
+            l2 = length + 1
+            h = heigth + 2
+            YL_l2 = l2
+            YL_w2 = w2
+            YL_w1 = w1
+            YL_l1 = l1
+            k = math.floor((width + 1) / 2)
+            W = k * 2 + h
+            L = l1 + l2 + w1 + w2 + 35
+            L_plus_W = l1 + w2
+            H_div_L = round((heigth / length), 2)
+            H_div_W = round((heigth / width), 2)
+            L_div_W = round((length / width), 2)
+            S = round((L * W) / 1000000, 4)
+
+        elif self.radio_EB.isChecked():
+            w1 = width + 5
+            w2 = width + 5
+            l1 = length + 5
+            l2 = length + 3
+            YL_l2 = length + 5
+            YL_w2 = width + 5
+            YL_w1 = length + 3
+            YL_l1 = width + 5
+            h = heigth + 10
+            k = math.floor((width + 5) / 2)
+            W = k * 2 + h
+            L = l1 + l2 + w1 + w2 + 40
+            L_plus_W = l1 + w2
+            H_div_L = round((heigth / length), 2)
+            H_div_W = round((heigth / width), 2)
+            L_div_W = round((length / width), 2)
+            S = round((L * W) / 1000000, 4)
+
+        elif self.radio_BC.isChecked():
+            w1 = width + 8
+            w2 = width + 8
+            l1 = length + 8
+            l2 = length + 4
+            YL_l2 = length + 8
+            YL_w2 = width + 8
+            YL_w1 = length + 4
+            YL_l1 = width + 8
+            h = heigth + 14
+            k = math.floor((width + 8) / 2)
+            W = k * 2 + h
+            L = l1 + l2 + w1 + w2 + 40
+            L_plus_W = l1 + w2
+            H_div_L = round((heigth / length), 2)
+            H_div_W = round((heigth / width), 2)
+            L_div_W = round((length / width), 2)
+            S = round((L * W) / 1000000, 4)
+
+        else:
+            err = QMessageBox()
+            err.setWindowTitle('Ошибка')
+            err.setText('Не выбран профиль')
+            err.exec_()
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+
+        sq = 'Площадь ' + str(S) + ' m2'
+        self.square_m2.setText("{}".format(sq))
+        self.square_m2.setStyleSheet(""" color: green;""")
+
+        if S < 0.2:
+            flag_evol = False
+            flag_924 = False
+            flag_1228 = False
+            flag_618 = False
+            flag_evol_L = False
+            flag_bobst = True
+            self.square_m2.setText("{}".format(sq))
+            self.square_m2.setStyleSheet(""" color: red;""")
+
+        # FOR__EVOL_W
+        if w1 > 184 and w1 < 956:
+            self.YW_w1.setText("{}".format(w1))
+            self.YW_w1.setStyleSheet("""background-color: white; color: green;""")
+            self.error_w1.setStyleSheet("""background-color: none;""")
+            self.error_w1.clear()
+        else:
+            if w1 < 185:
+                flag_evol = False
+                self.YW_w1.setText("{}".format(w1))
+                self.YW_w1.setStyleSheet("""background-color: white; color: red;""")
+                self.error_w1.setGeometry(QtCore.QRect(540, 100, 81, 41))
+                self.error_w1.setText("{}".format('(min 185)'))
+                self.error_w1.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_w1.setText("{}".format(w1))
+                self.YW_w1.setStyleSheet("""background-color: white; color: red;""")
+                self.error_w1.setGeometry(QtCore.QRect(540, 100, 81, 41))
+                self.error_w1.setText("{}".format('(max 955)'))
+                self.error_w1.setStyleSheet("""background-color: white; color: red;""")
+
+        if w2 > 184 and w2 < 956:
+            self.YW_w2.setText("{}".format(w2))
+            self.YW_w2.setStyleSheet("""background-color: white; color: green;""")
+            self.error_w2.setStyleSheet("""background-color: none;""")
+            self.error_w2.clear()
+        else:
+            if w2 < 185:
+                flag_evol = False
+                self.YW_w2.setText("{}".format(w2))
+                self.YW_w2.setStyleSheet("""background-color: white; color: red;""")
+                self.error_w2.setGeometry(QtCore.QRect(980, 100, 81, 41))
+                self.error_w2.setText("{}".format('(min 185)'))
+                self.error_w2.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_w2.setText("{}".format(w2))
+                self.YW_w2.setStyleSheet("""background-color: white; color: red;""")
+                self.error_w2.setGeometry(QtCore.QRect(980, 100, 81, 41))
+                self.error_w2.setText("{}".format('(max 955)'))
+                self.error_w2.setStyleSheet("""background-color: white; color: red;""")
+
+        if l1 > 89 and l1 < 786:
+            self.YW_l1.setText("{}".format(l1))
+            self.YW_l1.setStyleSheet("""background-color: white; color: green;""")
+            self.error_l1.setStyleSheet("""background-color: none;""")
+            self.error_l1.clear()
+        else:
+            if l1 < 90:
+                flag_evol = False
+                self.YW_l1.setText("{}".format(l1))
+                self.YW_l1.setStyleSheet("""background-color: white; color: red;""")
+                self.error_l1.setGeometry(QtCore.QRect(760, 100, 81, 41))
+                self.error_l1.setText("{}".format('(min 90)'))
+                self.error_l1.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_l1.setText("{}".format(l1))
+                self.YW_l1.setStyleSheet("""background-color: white; color: red;""")
+                self.error_l1.setGeometry(QtCore.QRect(760, 100, 81, 41))
+                self.error_l1.setText("{}".format('(max 785)'))
+                self.error_l1.setStyleSheet("""background-color: white; color: red;""")
+
+        if l2 > 84 and l2 < 787:
+            self.YW_l2.setText("{}".format(l2))
+            self.YW_l2.setStyleSheet("""background-color: white; color: green;""")
+            self.error_l2.setStyleSheet("""background-color: none;""")
+            self.error_l2.clear()
+        else:
+            if l2 < 85:
+                flag_evol = False
+                self.YW_l2.setText("{}".format(l2))
+                self.YW_l2.setStyleSheet("""background-color: white; color: red;""")
+                self.error_l2.setGeometry(QtCore.QRect(1210, 100, 81, 41))
+                self.error_l2.setText("{}".format('(min 85)'))
+                self.error_l2.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_l2.setText("{}".format(l2))
+                self.YW_l2.setStyleSheet("""background-color: white; color: red;""")
+                self.error_l2.setGeometry(QtCore.QRect(1210, 100, 81, 41))
+                self.error_l2.setText("{}".format('(max 786)'))
+                self.error_l2.setStyleSheet("""background-color: white; color: red;""")
+
+        if h > 59 and h < 499:
+            self.YW_h.setText("{}".format(h))
+            self.YW_h.setStyleSheet("""background-color: white; color: green;""")
+            self.error_h.setStyleSheet("""background-color: none;""")
+            self.error_h.clear()
+        else:
+            if h < 60:
+                flag_evol = False
+                self.YW_h.setText("{}".format(h))
+                self.YW_h.setStyleSheet("""background-color: white; color: red;""")
+                self.error_h.setGeometry(QtCore.QRect(500, 250, 81, 41))
+                self.error_h.setText("{}".format('(min 60)'))
+                self.error_h.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_h.setText("{}".format(h))
+                self.YW_h.setStyleSheet("""background-color: white; color: red;""")
+                self.error_h.setGeometry(QtCore.QRect(500, 250, 81, 41))
+                self.error_h.setText("{}".format('(max 498)'))
+                self.error_h.setStyleSheet("""background-color: white; color: red;""")
+
+        if k < 281:
+            self.YW_k.setText("{}".format(k))
+            self.YW_k.setStyleSheet("""background-color: white; color: green;""")
+            self.error_k.setStyleSheet("""background-color: none;""")
+            self.error_k.clear()
+        else:
+            flag_evol = False
+            self.YW_k.setText("{}".format(k))
+            self.YW_k.setStyleSheet("""background-color: white; color: red;""")
+            self.error_k.setGeometry(QtCore.QRect(500, 360, 81, 41))
+            self.error_k.setText("{}".format('(max 280)'))
+            self.error_k.setStyleSheet("""background-color: white; color: red;""")
+
+        if L > 654 and L < 2535:
+            self.YW_work_l.setText("{}".format(L))
+            self.YW_work_l.setStyleSheet("""background-color: white; color: green;""")
+            self.error_WL.setStyleSheet("""background-color: none;""")
+            self.error_WL.clear()
+        else:
+            if L < 655:
+                flag_evol = False
+                self.YW_work_l.setText("{}".format(L))
+                self.YW_work_l.setStyleSheet("""background-color: white; color: red;""")
+                self.error_WL.setGeometry(QtCore.QRect(880, 60, 90, 41))
+                self.error_WL.setText("{}".format('(min 655)'))
+                self.error_WL.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_work_l.setText("{}".format(L))
+                self.YW_work_l.setStyleSheet("""background-color: white; color: red;""")
+                self.error_WL.setGeometry(QtCore.QRect(880, 60, 90, 41))
+                self.error_WL.setText("{}".format('(max 2500)'))
+                self.error_WL.setStyleSheet("""background-color: white; color: red;""")
+
+        if W > 249 and W < 1200:
+            self.YW_work_H.setText("{}".format(W))
+            self.YW_work_H.setStyleSheet("""background-color: white; color: green;""")
+            self.error_WH.setStyleSheet("""background-color: none;""")
+            self.error_WH.clear()
+            if W > 950:
+                self.error_WH.setGeometry(QtCore.QRect(380, 210, 90, 41))
+                self.error_WH.setText("{}".format('скипфид ?'))
+                self.error_WH.setStyleSheet("""background-color: white; color: green;""")
+        else:
+            if W < 250:
+                flag_evol = False
+                self.YW_work_H.setText("{}".format(W))
+                self.YW_work_H.setStyleSheet("""background-color: white; color: red;""")
+                self.error_WH.setGeometry(QtCore.QRect(380, 210, 90, 41))
+                self.error_WH.setText("{}".format('(min 250)'))
+                self.error_WH.setStyleSheet("""background-color: white; color: red;""")
+            else:
+                flag_evol = False
+                self.YW_work_H.setText("{}".format(W))
+                self.YW_work_H.setStyleSheet("""background-color: white; color: red;""")
+                self.error_WH.setGeometry(QtCore.QRect(380, 210, 90, 41))
+                self.error_WH.setText("{}".format('(max 1200)'))
+                self.error_WH.setStyleSheet("""background-color: white; color: red;""")
+
+# -----------------------------отображение линий-------------------------------
+        if flag_evol:
+            self.line_EVOL.setStyleSheet(""" color: green;""")
+        else:
+            self.line_EVOL.setStyleSheet(""" color: red;""")
+
+        if flag_evol_L:
+            self.line_EVOL_2.setStyleSheet(""" color: green;""")
+        else:
+            self.line_EVOL_2.setStyleSheet(""" color: red;""")
+
+        if flag_618:
+            self.line_618.setStyleSheet(""" color: green;""")
+        else:
+            self.line_618.setStyleSheet(""" color: red;""")
+
+        if flag_924:
+            self.line_924.setStyleSheet(""" color: green;""")
+        else:
+            self.line_924.setStyleSheet(""" color: red;""")
+
+        if flag_1228:
+            self.line_1228.setStyleSheet(""" color: green;""")
+        else:
+            self.line_1228.setStyleSheet(""" color: red;""")
+
+        if flag_bobst:
+            self.line_bobst.setStyleSheet(""" color: green;""")
+        else:
+            self.line_bobst.setStyleSheet(""" color: black;""")
+
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
